@@ -72,4 +72,17 @@ public class AddressDaoTest
     }
 
 
+    //PatientEntity -> VisitEntity
+    PatientEntity patientEntity = new PatientEntity();
+    VisitEntity visitEntity = new VisitEntity();
+    visitEntity.setPatientEntity(patientEntity);
+    visitDao.save(visitEntity);
+
+//    //AddressEntity -> DoctorEntity
+//    AddressEntity addressEntity = new AddressEntity();
+//    DoctorEntity doctorEntity = new DoctorEntity();
+//    doctorEntity.setAddressEntity(doctorEntity);
+//    visitDao.save(doctorEntity);
+
+
 }
