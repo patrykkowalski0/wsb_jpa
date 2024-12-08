@@ -18,10 +18,8 @@ public class MedicalTreatmentEntity {
 	@Enumerated(EnumType.STRING)
 	private TreatmentType type;
 
-//	// VISIT_ID >- ManyToOne relacja jednokierunkowa, wartość wymagana
-//	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, optional = false)
-//	@JoinColumn(name="VISIT_ID")
-//	private VisitEntity visitEntity;
+	// MEDICAL_TREATMENT_ID, Unilateral relationship, with orphan removal
+	// Medical Treatment -> Visit -> Unilateral
 
 	public Long getId() {
 		return id;

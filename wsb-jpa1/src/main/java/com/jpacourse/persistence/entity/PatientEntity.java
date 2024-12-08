@@ -22,6 +22,7 @@ public class PatientEntity {
 	@Column(nullable = false)
 	private String telephoneNumber;
 
+	@Column(nullable = false)
 	private String email;
 
 	@Column(nullable = false)
@@ -30,14 +31,25 @@ public class PatientEntity {
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
 
+
+//	//ADDRESS_ID - OneToOne - jednokierunkowa z usunięciem sierot
+//	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+//	private AddressEntity addressEntity;
+
+	// ADDRESS_ID Unilateral, non-nullable, relationship with orphan removal.
+	// Patient -> parent, Address -> child.
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
+	private AddressEntity address;
+
 //	//VISIT_ID - Relacja jeden do wielu dwiukierunkowa
 //	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //	@JoinColumn(name = "VISIT_ID")
 //	private List<VisitEntity> visits;
 
-//	//ADDRESS_ID - OneToOne - jednokierunkowa z usunięciem sierot
-//	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-//	private AddressEntity addressEntity;
+	// VISIT_ID Bilateral, nullable, relationship.
+	// Patient -> parent, Visit -> child.
+	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+	private List<VisitEntity> visits;
 
 	public Long getId() {
 		return id;

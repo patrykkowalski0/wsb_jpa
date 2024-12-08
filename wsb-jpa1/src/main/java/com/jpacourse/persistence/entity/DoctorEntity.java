@@ -32,9 +32,16 @@ public class DoctorEntity {
 	private Specialization specialization;
 
 
-//	//ADDRESS_ID - OneToOne - jednokierunkowa z usunięciem sierot
+	//ADDRESS_ID - OneToOne - jednokierunkowa z usunięciem sierot
 //	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 //	private AddressEntity addressEntity;
+
+	// VISIT_ID Bilateral, non-nullable, relationship with orphan removal.
+	// Doctor -> parent, Visit -> child.
+	@OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+	private List<VisitEntity> visits;
+
+
 
 	public Long getId() {
 		return id;

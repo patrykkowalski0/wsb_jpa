@@ -39,6 +39,9 @@ public class AddressEntity {
 		return addressLine1;
 	}
 
+	// Unilateral relationship from Patient
+	// Getters and Setters
+
 	public void setAddressLine1(String addressLine1) {
 		this.addressLine1 = addressLine1;
 	}
