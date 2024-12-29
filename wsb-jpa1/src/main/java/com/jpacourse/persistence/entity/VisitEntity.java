@@ -19,14 +19,6 @@ public class VisitEntity {
 	@Column(nullable = false)
 	private LocalDateTime time;
 
-//	//DOCTOR_ID >- ManyToOne relacja jednokierunkowa, wymagana wartość
-//	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, optional = false)
-//	@JoinColumn(name="DOCTOR_ID")
-//	private DoctorEntity doctorEntity;
-//	public PatientEntity getPatientEntity(){
-//		return patientEntity;
-//	}
-
 	// DOCTOR_ID Bilateral, non-nullable, relationship.
 	// Doctor -> parent, Visit -> child.
 	@ManyToOne
@@ -43,7 +35,7 @@ public class VisitEntity {
 	// Medical Treatment -> Visit -> Unilateral
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "VISIT_ID", nullable = false)
-	private List<MedicalTreatmentEntity> medicalTreatment;
+	private List<MedicalTreatmentEntity> medicalTreatments;
 
 	public Long getId() {
 		return id;
@@ -69,4 +61,27 @@ public class VisitEntity {
 		this.time = time;
 	}
 
+	public DoctorEntity getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(DoctorEntity doctor) {
+		this.doctor = doctor;
+	}
+
+	public PatientEntity getPatient() {
+		return patient;
+	}
+
+	public void setPatient(PatientEntity patient) {
+		this.patient = patient;
+	}
+
+	public List<MedicalTreatmentEntity> getMedicalTreatments() {
+		return medicalTreatments;
+	}
+
+	public void setMedicalTreatments(List<MedicalTreatmentEntity> medicalTreatments) {
+		this.medicalTreatments = medicalTreatments;
+	}
 }

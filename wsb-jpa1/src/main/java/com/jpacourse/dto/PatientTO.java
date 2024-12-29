@@ -4,6 +4,7 @@ import com.jpacourse.persistence.enums.Specialization;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -18,6 +19,10 @@ public class PatientTO implements Serializable {
     private String email;
     private String patientNumber;
     private LocalDate dateOfBirth;
+    private Integer age;
+
+    // List of visits with required information
+    private List<VisitTO> visits;
 
     // Getters and Setters
     public Long getId() {
@@ -69,4 +74,18 @@ public class PatientTO implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age){
+        this.age = age;
+    }
+
+    public List<VisitTO> getVisits() {
+        return visits;
+    }
+    public void setVisits(List visits){
+        this.visits = visits;
+    }
 }

@@ -3,6 +3,8 @@ package com.jpacourse.mapper;
 import com.jpacourse.dto.PatientTO;
 import com.jpacourse.persistence.entity.PatientEntity;
 
+import java.time.LocalDate;
+
 public final class PatientMapper
 {
 
@@ -20,6 +22,7 @@ public final class PatientMapper
         patientTO.setEmail(patientEntity.getEmail());
         patientTO.setPatientNumber(patientEntity.getPatientNumber());
         patientTO.setDateOfBirth(patientEntity.getDateOfBirth());
+        patientTO.setVisits(VisitMapper.mapToTOs(patientEntity.getVisits()));
         return patientTO;
     }
 

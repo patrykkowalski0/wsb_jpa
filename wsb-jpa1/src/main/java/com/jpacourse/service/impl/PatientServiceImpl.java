@@ -11,25 +11,49 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
 @Transactional
 public class PatientServiceImpl implements PatientService
 {
-    private final PatientDao PatientDao;
+    private final PatientDao patientDao;
 
     @Autowired
     public PatientServiceImpl(PatientDao pPatientDao)
     {
-        PatientDao = pPatientDao;
+        patientDao = pPatientDao;
     }
-
 
     @Override
     public PatientTO findById(Long id) {
-        final PatientEntity entity = PatientDao.findOne(id);
+        final PatientEntity entity = patientDao.findOne(id);
         return PatientMapper.mapToTO(entity);
+
+    }
+
+    @Override
+    @Transactional
+    public PatientEntity save(PatientEntity patient) {
+        return patientDao.save(patient);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        patientDao.delete(id);
+    }
+
+    @Override
+    @Transactional
+    public void addVisit(Long patientId, Long doctorId, String description, LocalDate visitDate) {
+        PatientEntity patient = patientDao.findOne(patientId);
+        if (patient == null) {
+            throw new IllegalArgumentException("Patient not found with ID: " + patientId);
+        }
 
     }
 }

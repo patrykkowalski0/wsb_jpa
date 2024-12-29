@@ -3,6 +3,9 @@ package com.jpacourse.persistence.entity;
 import java.time.LocalDate;
 import javax.persistence.*;
 
+import java.time.Period;
+import java.time.LocalDate;
+
 import java.util.List;
 
 @Entity
@@ -28,23 +31,18 @@ public class PatientEntity {
 	@Column(nullable = false)
 	private String patientNumber;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private LocalDate dateOfBirth;
 
+	@Column(nullable = false)
+	private Integer age; // new field
 
-//	//ADDRESS_ID - OneToOne - jednokierunkowa z usunięciem sierot
-//	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-//	private AddressEntity addressEntity;
 
 	// ADDRESS_ID Unilateral, non-nullable, relationship with orphan removal.
 	// Patient -> parent, Address -> child.
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true, orphanRemoval = true)
 	private AddressEntity address;
 
-//	//VISIT_ID - Relacja jeden do wielu dwiukierunkowa
-//	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@JoinColumn(name = "VISIT_ID")
-//	private List<VisitEntity> visits;
 
 	// VISIT_ID Bilateral, nullable, relationship.
 	// Patient -> parent, Visit -> child.
@@ -107,4 +105,36 @@ public class PatientEntity {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	public static int calculateAge(LocalDate dateOfBirth) {
+		if (dateOfBirth == null) {
+			throw new IllegalArgumentException("Date of birth cannot be null");
+		}
+		return Period.between(dateOfBirth, LocalDate.now()).getYears();
+	}
+	public int getAge(){
+		if (dateOfBirth == null) {
+			throw new IllegalArgumentException("Date of birth cannot be null");
+		}
+		return Period.between(dateOfBirth, LocalDate.now()).getYears();
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+	public AddressEntity getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressEntity address) {
+		this.address = address;
+	}
+
+	public List<VisitEntity> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(List<VisitEntity> visits) {
+		this.visits = visits;
+	}
 }
